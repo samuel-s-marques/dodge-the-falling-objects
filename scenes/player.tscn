@@ -1,0 +1,87 @@
+[gd_scene load_steps=13 format=3 uid="uid://cti2f0rmsvy8b"]
+
+[ext_resource type="Script" path="res://scripts/player.gd" id="1_t4gaq"]
+[ext_resource type="Texture2D" uid="uid://dt2w2qjpdm5ha" path="res://assets/monochrome_tilemap_transparent_packed.png" id="2_k6xt7"]
+[ext_resource type="Material" uid="uid://dej4e0p244e6v" path="res://tres/player.tres" id="3_6w7pw"]
+[ext_resource type="AudioStream" uid="uid://gq4ykootokwg" path="res://assets/sounds/explosion.wav" id="4_gbc5t"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_nhxwf"]
+size = Vector2(12, 14)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_vf1cf"]
+atlas = ExtResource("2_k6xt7")
+region = Rect2(0, 272, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_w603b"]
+atlas = ExtResource("2_k6xt7")
+region = Rect2(64, 272, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ijva7"]
+atlas = ExtResource("2_k6xt7")
+region = Rect2(16, 272, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_711hg"]
+atlas = ExtResource("2_k6xt7")
+region = Rect2(32, 272, 16, 16)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_uqyoj"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_vf1cf")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_w603b")
+}],
+"loop": true,
+"name": &"idle",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ijva7")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_711hg")
+}],
+"loop": true,
+"name": &"walking",
+"speed": 15.0
+}]
+
+[sub_resource type="Gradient" id="Gradient_j02no"]
+offsets = PackedFloat32Array(1)
+colors = PackedColorArray(1, 0, 0.129412, 1)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_wqrxt"]
+gradient = SubResource("Gradient_j02no")
+width = 1
+
+[node name="Player" type="CharacterBody2D"]
+script = ExtResource("1_t4gaq")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, -7)
+shape = SubResource("RectangleShape2D_nhxwf")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+position = Vector2(0, -8)
+sprite_frames = SubResource("SpriteFrames_uqyoj")
+animation = &"walking"
+autoplay = "idle"
+frame_progress = 0.703049
+
+[node name="GPUParticles2D" type="GPUParticles2D" parent="."]
+emitting = false
+amount = 120
+process_material = ExtResource("3_6w7pw")
+texture = SubResource("GradientTexture1D_wqrxt")
+lifetime = 3.0
+explosiveness = 1.0
+randomness = 1.0
+trail_sections = 2
+trail_section_subdivisions = 1
+
+[node name="DeathSound" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("4_gbc5t")
+bus = &"SFX"

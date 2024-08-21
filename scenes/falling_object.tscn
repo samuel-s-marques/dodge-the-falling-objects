@@ -1,0 +1,32 @@
+[gd_scene load_steps=5 format=3 uid="uid://cp58t7x40fwj3"]
+
+[ext_resource type="Texture2D" uid="uid://dboxa4l13i5x4" path="res://assets/rock-0001.png" id="1_gd0bt"]
+[ext_resource type="Script" path="res://scripts/falling_object.gd" id="1_tb68k"]
+[ext_resource type="Material" uid="uid://b7wxh75kn8ua0" path="res://scenes/falling_object.tres" id="3_hpevy"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_h84q7"]
+size = Vector2(16, 16)
+
+[node name="Area2D" type="Area2D"]
+collision_layer = 4
+script = ExtResource("1_tb68k")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, -8)
+shape = SubResource("RectangleShape2D_h84q7")
+
+[node name="Sprite" type="Sprite2D" parent="."]
+position = Vector2(0, -8)
+texture = ExtResource("1_gd0bt")
+
+[node name="GPUParticles2D" type="GPUParticles2D" parent="."]
+emitting = false
+amount = 60
+process_material = ExtResource("3_hpevy")
+lifetime = 3.0
+explosiveness = 1.0
+randomness = 1.0
+trail_sections = 2
+trail_section_subdivisions = 1
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]
