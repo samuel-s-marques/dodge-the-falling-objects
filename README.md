@@ -15,3 +15,5 @@
 5. **Menu**: A menu with "Play" and "Quit" is shown before the game starts
 
 It's my first game made with Godot. Inspired by [Brackeys tutorial](https://www.youtube.com/watch?v=LOhfqjmasi0).
+
+![image](https://github.com/user-attachments/assets/35d0307f-5cf2-4ee0-9085-dd57ff2a365b)
